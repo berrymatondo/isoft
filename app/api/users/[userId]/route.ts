@@ -1,16 +1,21 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: Request,
-  params: { params: { userId: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ userId: string }> }
 ) {
+  const { userId } = await params;
 
-  const { userId } = await params.params;
+  // Si ton id Prisma est Int
+  /*   const id = Number(userId);
+  if (!Number.isFinite(id)) {
+    return NextResponse.json({ error: "Invalid userId" }, { status: 400 });
+  } */
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: userId }, // <-- number
     });
 
     if (!user) {
@@ -20,7 +25,6 @@ export async function GET(
     return NextResponse.json(user, { status: 200 });
   } catch (err) {
     console.error("Error fetching user:", err);
-
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
