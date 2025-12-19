@@ -107,12 +107,15 @@ export function Sidebar() {
   };
 
   const handleLogout = async () => {
-    await authClient.signOut();
-
-    // Optional: redirect after logout
-    router.push("/auth/signin");
-    window.location.reload();
-    router.refresh();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/auth/signin"); // redirect to login page
+          window.location.reload();
+          router.refresh();
+        },
+      },
+    });
   };
 
   return (
