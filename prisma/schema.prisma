@@ -37,7 +37,7 @@ model Session {
   updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
-  userId    String
+  userId    String 
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -103,22 +103,182 @@ model Person {
   userId Int? @map("userid")
   username String?
   origin String?
-  //assus Assurance[]
- // immos Immo[]
- // task Task[]
+  assus Assurance[]
+ immos Immo[]
+  task Task[]
   rgpd Rgpd? 
 
     @@map("person")
+}
+
+
+
+model Assurance {
+  id       Int     @id @default(autoincrement())
+  comments    String?
+  status AssuStatus
+  type AssuType
+  createAt DateTime @default(now()) @map("createat")
+  updatedAt DateTime @updatedAt  @map("updatedat")
+  userId Int? @map("userid")
+  username String?
+  personId Int @map("personid")
+  person Person @relation(fields: [personId], references: [id])
+  task Task[] 
+
+  @@map("assurance")
+}
+
+
+model Task {
+  id       Int     @id @default(autoincrement())
+  description    String?
+  done            Boolean @default(false)
+  type            ProductType
+
+  personId        Int @map("personid")
+  person Person @relation(fields: [personId], references: [id])
+
+  assuId Int? @map("assuid")
+  assurance Assurance? @relation(fields: [assuId], references: [id])
+
+  immoId Int? @map("immoid")
+  immo Immo? @relation(fields: [immoId], references: [id])
+
+  createAt DateTime @default(now()) @map("createat")
+  updatedAt DateTime @updatedAt  @map("updatedat")
+  userId Int? @map("userid")
+  username String?
+
+   @@map("task")
+  
 }
 
 model Rgpd {
   id Int @id @default(autoincrement())
   createAt DateTime @default(now()) @map("createat")
   updatedAt DateTime @updatedAt  @map("updatedat")
-  personId Int @unique  @map("personid")
+  personId Int @unique @map("personid")
   signed Boolean @default(false)
   checksum Int
   person Person @relation(fields: [personId], references: [id])
 
-  @@map("rgpd")
+   @@map("rgpd")
+}
+
+model Solde {
+  id Int @id @default(autoincrement())
+  denom String
+  category catagoryTyp
+  amount Decimal @db.Decimal(10,2)
+  conjoint Boolean @default(false)
+  immoId Int
+  //immo Immo @relation(fields: [immoId], references: [id])
+
+   @@map("solde")
+
+}
+
+model Parameter {
+  id Int @id @default(autoincrement())
+  name String?
+  visible Boolean? @default(false)
+  origin String?
+
+   @@map("parameter")
+}
+
+
+enum catagoryTyp {
+ E
+ S
+ // amount Decimal?  @mysql.Decimal(10, 2)
+}
+
+
+model Immo {
+  id Int @id @default(autoincrement())
+  anaDone Boolean @default(false) @map("anadone")
+  cachierCharge String? @map("cachiercharge")
+  debutClause DateTime? @map("debutclause")
+  demandeCours String? @map("demandecours")
+  endDate DateTime? @map("enddate")
+  fileClosed Boolean @default(false) @map("fileclosed")
+  notes String? 
+  offerAccepted Boolean @default(false) @map("offeraccepted")
+  offerDone Boolean @default(false) @map("offerdone")
+  rechercheBien String? @map("recherchebien")
+  startDate DateTime? @map("startdate")
+  immoStatus ImmoStatus @default(NEW) @map("immostatus")
+  maritalStatus MaritalStatus @map("maritalstatus")
+
+  salNet Decimal @db.Decimal(10,2) @map("salnet")
+  salNetCo Decimal @db.Decimal(10,2) @map("salnetco")
+  chqRep Decimal @db.Decimal(10,2)  @map("chqrep")
+  chqRepCo Decimal @db.Decimal(10,2) @map("chqrepco")
+  autRev Decimal @db.Decimal(10,2) @map("autrev")
+  autRevCo Decimal @db.Decimal(10,2) @map("autrevco")
+  prtTmp Decimal @db.Decimal(10,2) @map("prttmp")
+  prtTmpCo Decimal @db.Decimal(10,2) @map("prttmpco")
+  autPrt Decimal @db.Decimal(10,2) @map("autprt")
+  autPrtCo Decimal @db.Decimal(10,2)  @map("autprtco")
+
+  createAt DateTime @default(now()) @map("createat")
+  updatedAt DateTime @updatedAt  @map("updatedat")
+  userId Int? @map("userid")
+  username String?
+
+  banque String?
+  bankName String? @map("bankname")
+  demAccepetd Boolean @default(false) @map("demaccepetd")
+  demAmount Decimal @db.Decimal(10,2)  @map("demamount")
+  duree Int @default(0)
+  mensualite Int @default(0)
+  taux Decimal @db.Decimal(10,2)
+
+  //linked client
+  personId Int @map("personid")
+  person Person @relation(fields: [personId], references: [id])
+  task Task[] 
+  //solde Solde[] 
+
+   @@map("immo")
+}
+enum ImmoStatus {
+  DEC
+  RBI
+  CLO
+  ARV
+  NEW
+}
+enum AssuType {
+  AXA
+  DELA
+  DKV
+  AUTRE
+}
+
+enum AssuStatus {
+  DV1
+  DV2
+  OFA
+  OAC 
+  PCD
+}
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+
+enum ProductType {
+  IMMO
+  ASSU
 }

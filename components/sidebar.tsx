@@ -39,13 +39,13 @@ const menuItems = [
       },
       {
         name: "Immobiliers",
-        href: "/immobiliers",
+        href: "/immos",
         icon: Home,
         color: "text-chart-3",
       },
       {
         name: "Assurances",
-        href: "/assurances",
+        href: "/assus",
         icon: Shield,
         color: "text-chart-5",
       },

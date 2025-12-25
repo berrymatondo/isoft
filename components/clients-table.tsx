@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { useState } from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Person } from "@prisma/client";
 
 const clients = [
   {
@@ -62,10 +63,14 @@ const clients = [
     telephoneColor: "text-foreground",
     produitsColor: "text-foreground",
   },
-]
+];
 
-export function ClientsTable() {
-  const [searchQuery, setSearchQuery] = useState("")
+type ClientsTableProps = {
+  persons: any;
+};
+
+export function ClientsTable({ persons }: ClientsTableProps) {
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div className="space-y-6">
@@ -75,10 +80,14 @@ export function ClientsTable() {
           <h2 className="text-2xl font-semibold text-primary">
             Liste des clients <span className="text-foreground">(868)</span>
           </h2>
-          <p className="mt-1 text-sm text-muted-foreground">Cette transaction permet de lister tous les clients</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Cette transaction permet de lister tous les clients
+          </p>
         </div>
         <Link href="/clients/new">
-          <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">Nouveau Client</Button>
+          <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+            Nouveau Client
+          </Button>
         </Link>
       </div>
 
@@ -95,10 +104,16 @@ export function ClientsTable() {
           />
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" className="bg-muted text-foreground hover:bg-muted/80">
+          <Button
+            variant="outline"
+            className="bg-muted text-foreground hover:bg-muted/80"
+          >
             Précédent
           </Button>
-          <Button variant="outline" className="bg-card text-foreground hover:bg-muted/50">
+          <Button
+            variant="outline"
+            className="bg-card text-foreground hover:bg-muted/50"
+          >
             Suivant
           </Button>
         </div>
@@ -110,24 +125,35 @@ export function ClientsTable() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
-                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Prénom</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Nom</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Téléphone</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">Produits</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">
+                  Prénom
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">
+                  Nom
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">
+                  Téléphone
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-muted-foreground">
+                  Produits
+                </th>
               </tr>
             </thead>
             <tbody>
-              {clients.map((client, index) => (
-                <tr
-                  key={client.id}
-                  className={`border-b border-border last:border-0 transition-colors hover:bg-muted/30 cursor-pointer`}
-                >
-                  <td className={`px-6 py-4 text-sm font-medium ${client.prenomColor}`}>{client.prenom}</td>
-                  <td className={`px-6 py-4 text-sm ${client.nomColor}`}>{client.nom}</td>
-                  <td className={`px-6 py-4 text-sm ${client.telephoneColor}`}>{client.telephone}</td>
-                  <td className={`px-6 py-4 text-sm ${client.produitsColor}`}>{client.produits}</td>
-                </tr>
-              ))}
+              {persons &&
+                persons.map((client: Person, index: number) => (
+                  <tr
+                    key={client.id}
+                    className={`border-b border-border last:border-0 transition-colors hover:bg-muted/30 cursor-pointer`}
+                  >
+                    <td className={`px-6 py-4 text-sm font-medium `}>
+                      {client.firstname}
+                    </td>
+                    <td className={`px-6 py-4 text-sm `}>{client.lastname}</td>
+                    <td className={`px-6 py-4 text-sm `}>{client.email}</td>
+                    <td className={`px-6 py-4 text-sm `}>{client.mobile}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -141,13 +167,17 @@ export function ClientsTable() {
         </div>
         <div className="flex items-center gap-2">
           <div className="h-3 w-3 rounded-sm bg-chart-3" />
-          <span className="text-sm text-chart-3">Attente consentement RGPD</span>
+          <span className="text-sm text-chart-3">
+            Attente consentement RGPD
+          </span>
         </div>
         <div className="flex items-center gap-2">
           <div className="h-3 w-3 rounded-sm bg-destructive" />
-          <span className="text-sm text-destructive">Consentement RGPD pas généré</span>
+          <span className="text-sm text-destructive">
+            Consentement RGPD pas généré
+          </span>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,0 +1,116 @@
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { getSession } from "@/lib/auth-server";
+
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ assuId: any }> }
+) {
+  const { assuId } = await params;
+
+  /*   
+export const GET = async (request: NextRequest) => {
+  const path = request.nextUrl.pathname;
+  const assuId = path.split("clients/")[1].split("/assus")[0];
+  console.log("path vaut:", path);
+  console.log("assuId vaut:", assuId); */
+
+  //console.log("assuId vaut:", assuId);
+
+  try {
+    const assu = await prisma.assurance.findUnique({
+      where: {
+        id: +assuId,
+      },
+      include: {
+        person: true,
+        task: true,
+      },
+    });
+
+    // console.log("READ client:", client);
+
+    return NextResponse.json({ message: "OK", assu }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error", error },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ assuId: any }> }
+) {
+  const { assuId } = await params;
+
+  const { type, status, comments } = await request.json();
+
+  const session = await getSession();
+
+  try {
+    /*       const results = await prisma.assurance.findMany({
+        where: {
+          personId: +clientId,
+        },
+      }); */
+
+    //    console.log("results", results);
+    const userTmp: any = session?.user;
+    const results = await prisma.assurance.update({
+      where: {
+        id: +assuId,
+      },
+      data: {
+        type: type,
+        status: status,
+        comments: comments,
+        username: userTmp.username ? userTmp.username : "",
+        userId: userTmp.id ? parseInt(userTmp.id) : null,
+      },
+    });
+
+    //  console.log("{ type, status, comments }", { type, status, comments });
+
+    return NextResponse.json({ message: "OK", results }, { status: 200 });
+    //  return NextResponse.json({ message: "OK", results }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error", error },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ assuId: any }> }
+) {
+  const { assuId } = await params;
+
+  try {
+    const results = await prisma.assurance.delete({
+      where: {
+        id: +assuId,
+      },
+    });
+
+    //  console.log("{ type, status, comments }", { type, status, comments });
+
+    return NextResponse.json({ message: "OK", results }, { status: 200 });
+    //  return NextResponse.json({ message: "OK", results }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Error", error },
+      {
+        status: 500,
+      }
+    );
+  }
+}
