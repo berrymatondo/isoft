@@ -4,14 +4,20 @@ import Title from "@/components/Title";
 import { authClient } from "@/lib/auth-client";
 import { AssuStatus, AssuType, Person } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-type ClientNewAssuPageProps = {
+/* type ClientNewAssuPageProps = {
   params: {
     clientId: number;
   };
+}; */
+
+type ClientNewAssuPageProps = {
+  params: Promise<{
+    clientId: string;
+  }>;
 };
 
 type Inputs = {
@@ -32,7 +38,9 @@ const inputStyle =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
 const ClientNewAssuPage = ({ params }: ClientNewAssuPageProps) => {
-  const [clientId, setClientId] = useState(params.clientId);
+  //const [clientId, setClientId] = useState(params.clientId);
+  const { clientId } = use(params); // ✅ OBLIGATOIRE
+  const numericClientId = Number(clientId);
   const [client, setClient] = useState<Person>();
   const router = useRouter();
 
@@ -62,7 +70,7 @@ const ClientNewAssuPage = ({ params }: ClientNewAssuPageProps) => {
   }, [clientId]);
 
   const processForm = async (newAssu: FieldValues) => {
-    // console.log("newAssu: ", newAssu);
+    //console.log("newAssu: ", newAssu);
 
     /*     const newClient = {
         email: email,
@@ -89,13 +97,13 @@ const ClientNewAssuPage = ({ params }: ClientNewAssuPageProps) => {
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
-      const res = await fetch(`/api/clients/${params.clientId}/assus`, options);
+      const res = await fetch(`/api/clients/${clientId}/assus`, options);
       //   const data = await res.json();
       //   return data;
 
       if (res.ok) {
         toast.success("Assurance créée avec succès");
-        router.push(`/clients/${params.clientId}`);
+        router.push(`/clients/${clientId}`);
       }
     } catch (e) {
       return e;

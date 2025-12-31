@@ -47,7 +47,7 @@ export default function SigninForm() {
       },
       {
         onSuccess: () => {
-          router.push("/dashboard");
+          router.push("/clients");
           router.refresh();
         },
         onError: (error) => {

@@ -87,7 +87,7 @@ export function Sidebar() {
   const session = useSession();
   const user = session.data?.user;
 
-  //if (user) console.log("USER", user);
+  if (user) console.log("USER", user);
 
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -107,12 +107,21 @@ export function Sidebar() {
   };
 
   const handleLogout = async () => {
+    console.log("iciii ii", user);
+
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
+          console.log("111111&");
+
           router.push("/auth/signin"); // redirect to login page
           window.location.reload();
           router.refresh();
+        },
+        onError: (error) => {
+          console.log("222222");
+
+          console.error("Logout error:", error);
         },
       },
     });
@@ -201,17 +210,31 @@ export function Sidebar() {
 
       {/* Logout */}
       <div className="border-t border-sidebar-border p-4">
-        <button
-          className={cn(
-            "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-sidebar-accent",
-            isCollapsed && "justify-center"
-          )}
-          title={isCollapsed ? "Se Déconnecter" : undefined}
-          onClick={handleLogout}
-        >
-          <LogOut className="h-5 w-5 shrink-0" />
-          {!isCollapsed && "Se Déconnecter"}
-        </button>
+        {user ? (
+          <button
+            className={cn(
+              "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-sidebar-accent",
+              isCollapsed && "justify-center"
+            )}
+            title={isCollapsed ? "Se Déconnecter" : undefined}
+            onClick={handleLogout}
+          >
+            <LogOut className="h-5 w-5 shrink-0" />
+            {!isCollapsed && "Se Déconnecter"}
+          </button>
+        ) : (
+          <button
+            className={cn(
+              "flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-destructive transition-colors hover:bg-sidebar-accent",
+              isCollapsed && "justify-center"
+            )}
+            title={isCollapsed ? "Se Déconnecter" : undefined}
+            onClick={() => router.push("/auth/signin")}
+          >
+            <LogOut className="h-5 w-5 shrink-0" />
+            {!isCollapsed && "Connexion"}
+          </button>
+        )}
       </div>
     </aside>
   );

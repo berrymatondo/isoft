@@ -421,7 +421,8 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
                 <tr
                   key={immo.id}
                   onClick={() =>
-                    router.push(`/clients/${numericClientId}/immos/${immo.id}`)
+                    //router.push(`/clients/${numericClientId}/immos/${immo.id}`)
+                    router.push(`/immos/${immo.id}`)
                   }
                   className="border-b border-hov hover:cursor-pointer hover:text-yellow-400"
                 >
@@ -488,7 +489,8 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
                   key={assurance.id}
                   onClick={() =>
                     router.push(
-                      `/clients/${numericClientId}/assus/${assurance.id}`
+                      // `/clients/${numericClientId}/assus/${assurance.id}`
+                      `/assus/${assurance.id}`
                     )
                   }
                   className="border-b border-hov hover:cursor-pointer hover:text-yellow-400"

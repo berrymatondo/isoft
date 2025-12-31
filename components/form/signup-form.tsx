@@ -108,7 +108,9 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button className="bg-amber-400" type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );

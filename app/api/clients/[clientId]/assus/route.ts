@@ -11,7 +11,7 @@ export const POST = async (request: NextRequest) => {
   const { assudenom, assustatus, description } = await request.json();
   const path = request.nextUrl.pathname;
   const clientId = path.split("clients/")[1].split("/assus")[0];
-  // console.log("ASSURANCE clientId vaut:", clientId);
+  console.log("ASSURANCE clientId vaut:", clientId);
   // console.log("obj", { assudenom, assustatus, description });
 
   const session = await getSession();
@@ -29,8 +29,11 @@ export const POST = async (request: NextRequest) => {
       },
     });
 
+    console.log("assus:", assus);
+
     return NextResponse.json({ message: "OK", assus }, { status: 201 });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 };

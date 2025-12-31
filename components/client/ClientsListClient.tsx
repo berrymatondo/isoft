@@ -26,9 +26,6 @@ export default function ClientsListClient({
   const tempo: any = session?.data?.user;
   const val: any = tempo ? tempo?.role : "USER";
 
-  //console.log("tempo", page, limit, search);
-  //console.log("val", val);
-
   useEffect(() => {
     const fetchClients = async () => {
       const data = await getAllclients(page, limit, search);

@@ -4,7 +4,7 @@ import { Header } from "@/components/header";
 import { redirect } from "next/navigation";
 
 export default function HomePage() {
-  redirect("/dashboard");
+  redirect("/clients");
   return (
     <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar />
