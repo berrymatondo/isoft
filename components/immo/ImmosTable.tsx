@@ -41,6 +41,9 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
     if (ind == 4) return "bg-orange-600";
     if (ind == 5) return "bg-green-600";
   };
+
+  console.log("immos:", immos);
+
   return (
     <table className="max-md:text-sm bg-card w-full mt-6 rounded-lg p-4">
       <thead>
@@ -62,12 +65,12 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
               key={el.id}
               className=" border-b border-b-hov hover:bg-hov hover:cursor-pointer  hover:text-yellow-400"
               onClick={() =>
-                router.push(`/clients/${el.person.id}/immos/${el.id}`)
+                router.push(`/clients/${el?.person?.id}/immos/${el.id}`)
               }
             >
               <td className="text-left p-2 max-md:flex max-md:flex-col max-md:text-xs">
-                <span className="uppercase">{el.person.lastname}</span>{" "}
-                {el.person.firstname}
+                <span className="uppercase">{el?.person?.lastname}</span>{" "}
+                {el?.person?.firstname}
               </td>
               <td className="max-md:hidden text-left text-sm">
                 <p>

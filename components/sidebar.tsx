@@ -87,7 +87,7 @@ export function Sidebar() {
   const session = useSession();
   const user = session.data?.user;
 
-  if (user) console.log("USER", user);
+  // if (user) console.log("USER", user);
 
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -107,19 +107,19 @@ export function Sidebar() {
   };
 
   const handleLogout = async () => {
-    console.log("iciii ii", user);
+    //   console.log("iciii ii", user);
 
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          console.log("111111&");
+          //  console.log("111111&");
 
           router.push("/auth/signin"); // redirect to login page
           window.location.reload();
           router.refresh();
         },
         onError: (error) => {
-          console.log("222222");
+          // console.log("222222");
 
           console.error("Logout error:", error);
         },
