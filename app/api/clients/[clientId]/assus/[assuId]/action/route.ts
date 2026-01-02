@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export const POST = async (request: NextRequest, response: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   const { description, type } = await request.json();
   const path = request.nextUrl.pathname;
   const clientId = path.split("clients/")[1].split("/assus")[0];

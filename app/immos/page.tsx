@@ -1,4 +1,6 @@
 import ImmosListImmo from "@/components/immo/ImmosListImmo";
+import { getUSer } from "@/lib/auth-server";
+import { redirect } from "next/navigation";
 
 type SearchParams = { [key: string]: string | string[] | undefined };
 
@@ -14,6 +16,12 @@ export default async function Page({
   const page = typeof sp.page === "string" ? Number(sp.page) : 1;
   const limit = typeof sp.limit === "string" ? Number(sp.limit) : 5;
   const search = typeof sp.search === "string" ? sp.search : undefined;
+
+  const user = await getUSer();
+
+  if (!user) {
+    redirect("/auth/signin");
+  }
 
   return <ImmosListImmo page={page} limit={limit} search={search} />;
 }
