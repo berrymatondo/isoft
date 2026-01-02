@@ -12,15 +12,15 @@ export default async function Page({
   searchParams: Promise<SearchParams>;
 }) {
   const user = await getUSer();
-  console.log("user:", user);
+  //console.log("user:", user);
 
   if (!user) {
-    console.log("ici 1");
+   // console.log("ici 1");
 
     redirect("/auth/signin");
   }
 
-  console.log("ici 2");
+  //console.log("ici 2");
 
   const sp = await searchParams;
 

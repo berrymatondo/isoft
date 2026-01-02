@@ -50,9 +50,11 @@ export default function ClientsListClient({
             <Title title="Liste des clients" back={false} size="lg:text-xl" />{" "}
             <span className="font-bold">({total})</span>
           </div>
-          {(val === "ADMIN" || val === "USER") && (
-            <AddButton path="/clients/newclient" text="Nouveau Client" />
-          )}
+          {/*           {(val === "ADMIN" || val === "USER") && (
+           */}{" "}
+          <AddButton path="/clients/newclient" text="Nouveau Client" />
+          {/*           )}
+           */}{" "}
         </div>
         <p className="text-sm  max-md:text-xs">
           Cette transaction permet de lister tous les clients

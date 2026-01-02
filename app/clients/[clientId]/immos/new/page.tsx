@@ -4,14 +4,14 @@ import Title from "@/components/Title";
 import { authClient } from "@/lib/auth-client";
 import { AssuStatus, AssuType, MaritalStatus, Person } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 type ClientNewAssuPageProps = {
-  params: {
-    clientId: number;
-  };
+  params: Promise<{
+    clientId: string;
+  }>;
 };
 
 type Inputs = {
@@ -35,7 +35,8 @@ const inputStyle2 =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
 const ClientNewImmoPage = ({ params }: ClientNewAssuPageProps) => {
-  const [clientId, setClientId] = useState(params.clientId);
+  //const [clientId, setClientId] = useState(params.clientId);
+  const { clientId } = use(params);
   const [client, setClient] = useState<Person>();
   const [maritalStatus, setMaritalStatus] = useState<string>("");
   const router = useRouter();
@@ -108,7 +109,6 @@ const ClientNewImmoPage = ({ params }: ClientNewAssuPageProps) => {
 
   const processForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log("newAssu: ", newAssu);
 
     const newImmo = {
       maritalStatus: maritalStatus,
@@ -138,13 +138,13 @@ const ClientNewImmoPage = ({ params }: ClientNewAssuPageProps) => {
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
-      const res = await fetch(`/api/clients/${params.clientId}/immos`, options);
+      const res = await fetch(`/api/clients/${clientId}/immos`, options);
       //   const data = await res.json();
       //   return data;
 
       if (res.ok) {
         toast.success("Dossier créé avec succès");
-        router.push(`/clients/${params.clientId}`);
+        router.push(`/clients/${clientId}`);
       }
     } catch (e) {
       return e;

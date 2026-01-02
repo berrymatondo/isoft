@@ -4,14 +4,14 @@ import Title from "@/components/Title";
 import { authClient } from "@/lib/auth-client";
 import { AssuStatus, AssuType, Assurance, Person } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 type ClientAssuUpdatePageProps = {
-  params: {
-    clientId: number;
-    assuId: number;
-  };
+  params: Promise<{
+    clientId: string;
+    assuId: string;
+  }>;
 };
 
 type Inputs = {
@@ -32,8 +32,10 @@ const inputStyle =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
 const ClientImmoDeletePage = ({ params }: ClientAssuUpdatePageProps) => {
-  const [assuId, setAssuId] = useState(params.assuId);
-  const [clientId, setClientId] = useState(params.clientId);
+  /*   const [assuId, setAssuId] = useState(params.assuId);
+  const [clientId, setClientId] = useState(params.clientId); */
+  const { clientId } = use(params);
+  const { assuId } = use(params);
   const [client, setClient] = useState<Person>();
   const [assu, setAssu] = useState<Assurance>();
   const [assuType, setAssuType] = useState("");
@@ -104,13 +106,13 @@ const ClientImmoDeletePage = ({ params }: ClientAssuUpdatePageProps) => {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
       const res = await fetch(
-        `/api/clients/${params.clientId}/assus/${params.assuId}`,
+        `/api/clients/${clientId}/assus/${assuId}`,
         options
       );
       //   const data = await res.json();
       //   return data;
 
-      if (res.ok) router.push(`/clients/${params.clientId}`);
+      if (res.ok) router.push(`/clients/${clientId}`);
     } catch (e) {
       return e;
     }

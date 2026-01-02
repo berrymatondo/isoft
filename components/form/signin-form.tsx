@@ -91,7 +91,12 @@ export default function SigninForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+          className="bg-accent hover:bg-accent hover:text-white hover:cursor-pointer"
+          type="submit"
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   );

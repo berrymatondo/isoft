@@ -4,21 +4,23 @@ import Title from "@/components/Title";
 import { authClient } from "@/lib/auth-client";
 import { Assurance, Person, Task } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 const inputStyle =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
 type ClientAssuPageProps = {
-  params: {
-    clientId: number;
+  params: Promise<{
+    clientId: string;
     assuId: number;
-  };
+  }>;
 };
 
 const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
-  const [assuId, setAssuId] = useState(params.assuId);
-  const [clientId, setClientId] = useState(params.clientId);
+  //const [assuId, setAssuId] = useState(params.assuId);
+  //const [clientId, setClientId] = useState(params.clientId);
+  const { clientId } = use(params);
+  const { assuId } = use(params);
   const [client, setClient] = useState<Person>();
   const [assu, setAssu] = useState<Assurance>();
   const [task, setTask] = useState<Task>();
@@ -38,7 +40,7 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
         cache: "no-store",
       });
       const data = await res.json();
-      console.log("CLIENT: ", data.client);
+      //console.log("CLIENT: ", data.client);
 
       setClient(data.client);
 
@@ -78,13 +80,13 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
       const res = await fetch(
-        `/api/clients/${params.clientId}/assus/${params.assuId}/action`,
+        `/api/clients/${clientId}/assus/${assuId}/action`,
         options
       );
       //   const data = await res.json();
       //   return data;
 
-      if (res.ok) router.push(`/clients/${params.clientId}`);
+      if (res.ok) router.push(`/clients/${clientId}`);
     } catch (e) {
       return e;
     }
@@ -230,9 +232,7 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
                 <button
                   type="button"
                   onClick={() =>
-                    router.push(
-                      `/clients/${params.clientId}/assus/${params.assuId}/delete`
-                    )
+                    router.push(`/clients/${clientId}/assus/${assuId}/delete`)
                   }
                   className="hover:bg-third mt-4 border text-red-400 text-lg rounded-lg px-2 py-1 w-1/3"
                 >
@@ -248,9 +248,7 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
               </button>
               <button
                 onClick={() =>
-                  router.push(
-                    `/clients/${params.clientId}/assus/${params.assuId}/update`
-                  )
+                  router.push(`/clients/${clientId}/assus/${assuId}/update`)
                 }
                 type="button"
                 className="mt-4 bg-teal-800 hover:bg-teal-600 text-white text-lg rounded-lg px-2 py-1 w-1/3 "

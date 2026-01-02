@@ -269,21 +269,21 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
             <span>{client?.origin}</span>
             <span className="text-yellow-400 mt-4">Notes</span>
             <span>{client?.notes}</span>
-
-            {val === "ADMIN" && (
-              <div className="w-full flex justify-end gap-4">
-                <button className="text-red-400">Supprimer</button>
-                <button
-                  onClick={() => router.push(`/clients/${client?.id}/update`)}
-                  className="bg-orange-400 p-2 rounded-lg"
-                >
-                  Modifier
-                </button>
-              </div>
-            )}
-
+            {/*             {val === "ADMIN" && (
+             */}{" "}
+            <div className="w-full flex justify-end gap-4">
+              {/*               <button className="text-red-400">Supprimer</button>
+               */}{" "}
+              <button
+                onClick={() => router.push(`/clients/${client?.id}/update`)}
+                className="bg-orange-400 p-2 rounded-lg hover:cursor-pointer hover:font-bold"
+              >
+                Modifier
+              </button>
+            </div>
+            {/*             )}
+             */}
             <span className="text-yellow-400 mt-4">RGPD</span>
-
             {signed ? (
               <p>{`Déjà consenti le ${update}`}</p>
             ) : found ? (
@@ -300,7 +300,6 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
             ) : (
               ""
             )}
-
             {!rgdp && (
               <button
                 onClick={generateCode}
@@ -489,8 +488,8 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
                   key={assurance.id}
                   onClick={() =>
                     router.push(
-                      // `/clients/${numericClientId}/assus/${assurance.id}`
-                      `/assus/${assurance.id}`
+                      `/clients/${numericClientId}/assus/${assurance.id}`
+                      //  `/assus/${assurance.id}`
                     )
                   }
                   className="border-b border-hov hover:cursor-pointer hover:text-yellow-400"

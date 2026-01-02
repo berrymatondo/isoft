@@ -3,7 +3,7 @@ import MyLabel from "@/components/MyLabel";
 import Title from "@/components/Title";
 import { Assurance, Immo, MaritalStatus, Person, Task } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Decimal } from "@prisma/client/runtime/library";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
@@ -12,15 +12,17 @@ const inputStyle =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
 type ClientAssuPageProps = {
-  params: {
-    clientId: number;
-    immoId: number;
-  };
+  params: Promise<{
+    clientId: string;
+    immoId: string;
+  }>;
 };
 
 const ClientImmoPage = ({ params }: ClientAssuPageProps) => {
-  const [immoId, setImmoId] = useState(params.immoId);
-  const [clientId, setClientId] = useState(params.clientId);
+  /*   const [immoId, setImmoId] = useState(params.immoId);
+  const [clientId, setClientId] = useState(params.clientId); */
+  const { clientId } = use(params);
+  const { immoId } = use(params);
   const [client, setClient] = useState<Person>();
   const [immo, setImmo] = useState<Immo>();
   const [task, setTask] = useState<Task>();
@@ -174,13 +176,13 @@ const ClientImmoPage = ({ params }: ClientAssuPageProps) => {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
       const res = await fetch(
-        `/api/clients/${params.clientId}/immos/${params.immoId}/action`,
+        `/api/clients/${clientId}/immos/${immoId}/action`,
         options
       );
       //   const data = await res.json();
       //   return data;
 
-      if (res.ok) router.push(`/clients/${params.clientId}`);
+      if (res.ok) router.push(`/clients/${clientId}`);
     } catch (e) {
       return e;
     }
@@ -248,7 +250,7 @@ const ClientImmoPage = ({ params }: ClientAssuPageProps) => {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
       const res = await fetch(
-        `/api/clients/${params.clientId}/immos/${params.immoId}`,
+        `/api/clients/${clientId}/immos/${immoId}`,
         options
       );
       //   const data = await res.json();
@@ -256,7 +258,7 @@ const ClientImmoPage = ({ params }: ClientAssuPageProps) => {
 
       if (res.ok) {
         toast.success("Dossier mis à jour avec succès");
-        router.push(`/clients/${params.clientId}`);
+        router.push(`/clients/${clientId}`);
       }
     } catch (e) {
       return e;

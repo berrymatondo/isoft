@@ -26,7 +26,22 @@ export const POST = async (request: NextRequest) => {
   const path = request.nextUrl.pathname;
   const clientId = path.split("clients/")[1].split("/immos")[0];
   // console.log("ASSURANCE clientId vaut:", clientId);
-  // console.log("obj", { assudenom, assustatus, description });
+  /*   console.log("obj", {
+    maritalStatus,
+    salNet,
+    salNetCo,
+    chqRep,
+    chqRepCo,
+    autRev,
+    autRevCo,
+    prtTmp,
+    prtTmpCo,
+    autPrt,
+    autPrtCo,
+    notes,
+    demAmount,
+    taux,
+  }); */
 
   const session = await getSession();
 
@@ -47,8 +62,8 @@ export const POST = async (request: NextRequest) => {
         autPrt,
         autPrtCo,
         notes,
-        demAmount,
-        taux,
+        demAmount: 0,
+        taux: 0,
         username: userTmp.username ? userTmp.username : "",
         userId: userTmp.id ? parseInt(userTmp.id) : null,
       },

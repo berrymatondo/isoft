@@ -6,21 +6,22 @@ import { authClient } from "@/lib/auth-client";
 import { Gender, MaritalStatus, Person } from "@prisma/client";
 
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 
 //export const runtime = "edge";
-
 type ClientDetailsPageProps = {
-  params: {
-    clientId: number;
-  };
+  params: Promise<{
+    clientId: string;
+  }>;
 };
 
 const UpdateClientPage = ({ params }: ClientDetailsPageProps) => {
   const session = authClient?.useSession();
   const tempo: any = session?.data?.user;
 
-  const [clientId, setClientId] = useState(params.clientId);
+  //const [clientId, setClientId] = useState(params.clientId);
+  const { clientId } = use(params); // ✅ OBLIGATOIRE
+  const numericClientId = Number(clientId);
   const [show, setShow] = useState<boolean>(false);
   const [email, setEmail] = useState<any>("");
   const [firstName, setFirstName] = useState<any>("");
@@ -108,11 +109,11 @@ const UpdateClientPage = ({ params }: ClientDetailsPageProps) => {
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
-      const res = await fetch(`/api/clients/${params.clientId}`, options);
+      const res = await fetch(`/api/clients/${clientId}`, options);
       const data = await res.json();
       //   return data;
 
-      if (res.ok) router.push(`/clients/${params.clientId}`);
+      if (res.ok) router.push(`/clients/${clientId}`);
     } catch (e) {
       return e;
     }

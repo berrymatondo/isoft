@@ -4,22 +4,24 @@ import Title from "@/components/Title";
 import MyLabel from "@/components/MyLabel";
 import { Person } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { FaLeaf } from "react-icons/fa";
 
 const inputStyle =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
 type ValidateRGPDProps = {
-  params: {
+  params: Promise<{
     clientId: string;
     checksumId: string;
-  };
+  }>;
 };
 
 const ValidateRGPD = ({ params }: ValidateRGPDProps) => {
-  const [checksumId, setChecksumId] = useState(params.checksumId);
-  const [clientId, setClientId] = useState(params.clientId);
+  /*   const [checksumId, setChecksumId] = useState(params.checksumId);
+  const [clientId, setClientId] = useState(params.clientId); */
+  const { checksumId } = use(params);
+  const { clientId } = use(params);
   const [name, setName] = useState<String>("");
   const [client, setClient] = useState<Person>();
   const [accord, setAccord] = useState(false);
@@ -65,8 +67,8 @@ const ValidateRGPD = ({ params }: ValidateRGPDProps) => {
 
   const processRGPD = async () => {
     const signRGPD = {
-      clientId: +params.clientId,
-      checksum: +params.checksumId,
+      clientId: +clientId,
+      checksum: +checksumId,
     };
 
     const options = {
@@ -81,7 +83,7 @@ const ValidateRGPD = ({ params }: ValidateRGPDProps) => {
 
     try {
       const res = await fetch(
-        `/api/rgpd/${params.clientId}/checksum/${params.checksumId}`,
+        `/api/rgpd/${clientId}/checksum/${checksumId}`,
         options
       );
       if (res.ok) setReload(!reload);
@@ -112,7 +114,7 @@ const ValidateRGPD = ({ params }: ValidateRGPDProps) => {
               size="lg:text-xl"
             />{" "}
           </div>
-          ${name}
+          {name}
           <div className="flex flex-col justify-between items-center">
             <p className="text-sm text-center p-2">
               <span>{"Je, soussigné(e) "}</span>
