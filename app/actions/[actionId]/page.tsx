@@ -5,12 +5,12 @@ import Title from "@/components/Title";
 import { Person, Task } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 
 type ActionDetailPageProps = {
-  params: {
-    actionId: number;
-  };
+  params: Promise<{
+    actionId: string;
+  }>;
 };
 
 const inputStyle =
@@ -18,8 +18,8 @@ const inputStyle =
 
 const ActionDetailPage = ({ params }: ActionDetailPageProps) => {
   const router = useRouter();
-  const [actionId, setActionId] = useState(params.actionId);
-
+  //const [actionId, setActionId] = useState(params.actionId);
+  const { actionId } = use(params);
   const [action, setAction] = useState<Task>();
   const [client, setClient] = useState<Person>();
   const [done, setDone] = useState<Boolean>(false);
@@ -30,8 +30,10 @@ const ActionDetailPage = ({ params }: ActionDetailPageProps) => {
       const res = await fetch(`/api/actions/` + actionId, {
         cache: "no-store",
       });
+      // console.log("res", res);
       const data = await res.json();
       // console.log("CLIENT: ", data);
+
       setAction(data.action);
       setClient(data.action.person);
       setDone(data.action.done);
@@ -52,7 +54,7 @@ const ActionDetailPage = ({ params }: ActionDetailPageProps) => {
     };
 
     try {
-      const res = await fetch(`/api/actions/${params.actionId}`, options);
+      const res = await fetch(`/api/actions/${actionId}`, options);
       const data = await res.json();
       //   return data;
 
@@ -80,7 +82,7 @@ const ActionDetailPage = ({ params }: ActionDetailPageProps) => {
     };
 
     try {
-      const res = await fetch(`/api/actions/${params.actionId}`, options);
+      const res = await fetch(`/api/actions/${actionId}`, options);
       const data = await res.json();
       //   return data;
 

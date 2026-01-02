@@ -32,8 +32,8 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
   const val: any = tempo ? tempo?.role : "USER";
 
   useEffect(() => {
-    /*     console.log("CLIENT ID", params.clientId);
-    console.log("ASSU ID", params.assuId); */
+    /*     console.log("CLIENT ID", clientId);
+    console.log("ASSU ID", assuId); */
 
     const fetchClient = async () => {
       const res = await fetch(`/api/clients/` + clientId, {
@@ -79,6 +79,7 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
       //return null;
+
       const res = await fetch(
         `/api/clients/${clientId}/assus/${assuId}/action`,
         options

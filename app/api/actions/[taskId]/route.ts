@@ -28,7 +28,7 @@ export async function PUT(request: NextRequest, { params }: Ctx) {
   }
 }
 
-/* export async function GET(_request: NextRequest, { params }: Ctx) {
+export async function GET(_request: NextRequest, { params }: Ctx) {
   const { taskId } = await params;
 
   try {
@@ -56,4 +56,3 @@ export async function DELETE(_request: NextRequest, { params }: Ctx) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }
- */
