@@ -80,7 +80,7 @@ const ClientImmoPage = ({ params }: ClientAssuPageProps) => {
         (immo: Immo) => immo.id === +immoId
       );
       setImmo(foundImmo);
-      console.log("foundImmo", foundImmo);
+      //console.log("foundImmo", foundImmo);
 
       const foundTask = data.client.task.find(
         (task: Task) => task.assuId === +immoId
@@ -533,7 +533,7 @@ const ClientImmoPage = ({ params }: ClientAssuPageProps) => {
                 checked={anaDone}
                 onChange={(e) => {
                   setAnaDone(e.target.checked);
-                  console.log("e.target.checked:", e.target.checked);
+                  // console.log("e.target.checked:", e.target.checked);
 
                   if (e.target.checked) setImmoStatus("RBI");
                   else setImmoStatus("NEW");

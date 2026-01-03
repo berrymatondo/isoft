@@ -75,7 +75,7 @@ export async function PUT(
     notes,
   } = await request.json();
 
-  console.log("startDate: ", startDate, "endDate: ", endDate);
+  //console.log("startDate: ", startDate, "endDate: ", endDate);
 
   const session = await getSession();
 

@@ -63,7 +63,7 @@ const NewPublicClient = () => {
       const res = await fetch("/api/clients", options);
       const data = await res.json();
 
-      console.log("DATAAAAA", data);
+      //  console.log("DATAAAAA", data);
 
       //   return data;
 

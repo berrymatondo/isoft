@@ -12,8 +12,8 @@ export const PUT = async (request: NextRequest) => {
   const clientId = path.split("clients/")[1].split("/immos")[0];
   const immoId = path.split("clients/")[1].split("/immos/")[1];
 
-  console.log("clientId: ", clientId);
-  console.log("immoId: ", immoId);
+  //console.log("clientId: ", clientId);
+  //console.log("immoId: ", immoId);
 
   const {
     maritalStatus,
@@ -42,7 +42,7 @@ export const PUT = async (request: NextRequest) => {
     notes,
   } = await request.json();
 
-  console.log("startDate: ", startDate, "endDate: ", endDate);
+  //console.log("startDate: ", startDate, "endDate: ", endDate);
 
   const session = await getSession();
 

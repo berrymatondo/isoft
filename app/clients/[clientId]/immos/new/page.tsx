@@ -133,7 +133,7 @@ const ClientNewImmoPage = ({ params }: ClientNewAssuPageProps) => {
       },
       body: JSON.stringify(newImmo),
     };
-    console.log("newImmo", newImmo);
+    //console.log("newImmo", newImmo);
 
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);

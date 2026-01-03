@@ -71,7 +71,7 @@ const DetailsImmoPage = ({ params }: ImmoDetailsPageProps) => {
         cache: "no-store",
       });
       const data = await res.json();
-      console.log("IMMO: ", data.immo);
+      //console.log("IMMO: ", data.immo);
 
       setImmo(data.immo);
       setClient(data.immo.person);
@@ -245,7 +245,7 @@ const DetailsImmoPage = ({ params }: ImmoDetailsPageProps) => {
       },
       body: JSON.stringify(updateImmo),
     };
-    console.log("updateImmo", updateImmo);
+    //console.log("updateImmo", updateImmo);
 
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);
@@ -535,7 +535,7 @@ const DetailsImmoPage = ({ params }: ImmoDetailsPageProps) => {
                 checked={anaDone}
                 onChange={(e) => {
                   setAnaDone(e.target.checked);
-                  console.log("e.target.checked:", e.target.checked);
+                  // console.log("e.target.checked:", e.target.checked);
 
                   if (e.target.checked) setImmoStatus("RBI");
                   else setImmoStatus("NEW");

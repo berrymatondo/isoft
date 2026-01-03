@@ -16,7 +16,7 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
   //console.log("CLI:", immos);
 
   const getProgress = (im: any) => {
-    console.log("IMG:", im.immoStatus);
+    // console.log("IMG:", im.immoStatus);
 
     if (im.immoStatus == "NEW") return 1;
     if (im.immoStatus == "RBI") return 2;
@@ -39,10 +39,10 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
     if (ind == 2) return "bg-yellow-600";
     if (ind == 3) return "bg-purple-600";
     if (ind == 4) return "bg-orange-600";
-    if (ind == 5) return "bg-green-600";
+    if (ind == 5) return "bg-green-800";
   };
 
-  console.log("immos:", immos);
+  //console.log("immos:", immos);
 
   return (
     <table className="max-md:text-sm bg-card w-full mt-6 rounded-lg p-4">
@@ -68,11 +68,11 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
                 router.push(`/clients/${el?.person?.id}/immos/${el.id}`)
               }
             >
-              <td className="text-left p-2 max-md:flex max-md:flex-col max-md:text-xs">
+              <td className="text-left p-2 max-md:flex max-md:flex-col text-xs">
                 <span className="uppercase">{el?.person?.lastname}</span>{" "}
                 {el?.person?.firstname}
               </td>
-              <td className="max-md:hidden text-left text-sm">
+              <td className="max-md:hidden text-left text-xs">
                 <p>
                   <span className="flex items-center gap-1">
                     <em>IMMO-{el.id}</em>
@@ -81,23 +81,28 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
                     </strong> */}
                   </span>
                 </p>
-                <p className="text-yellow-400 ">{el.notes}</p>
+                <p className="text-yellow-400 leading-snug line-clamp-2 max-w-md">
+                  {el.notes}
+                </p>
               </td>
-              <td className="text-left py-2 ">
-                {prog.map((ele, index) => (
-                  <label
-                    className={
-                      getProgress(el) == ele
-                        ? `mr-2 ${getCol(
-                            getProgress(el)
-                          )} rounded-full px-3 py-1`
-                        : `mr-2 bg-hov rounded-full px-3 py-1`
-                    }
-                    key={index}
-                  >
-                    {ele}
-                  </label>
-                ))}{" "}
+              <td className="text-left py-2 text-xs flex flex-col gap-2">
+                <p>
+                  {prog.map((ele, index) => (
+                    <label
+                      className={
+                        getProgress(el) == ele
+                          ? `mr-2 ${getCol(
+                              getProgress(el)
+                            )} rounded-full px-3 py-1`
+                          : `mr-2 bg-hov rounded-full px-3 py-1 text-xs`
+                      }
+                      key={index}
+                    >
+                      {ele}
+                    </label>
+                  ))}
+                </p>
+
                 <p
                   className={`${getCol(
                     getProgress(el)
@@ -108,12 +113,12 @@ const ImmosTable = ({ immos, userRole }: ImmosTableProps) => {
                 <span
                   className={`${getCol(
                     getProgress(el)
-                  )} max-md:hidden  p-1 rounded-lg max-md:text-xs`}
+                  )} max-md:hidden  p-1 rounded-lg max-md:text-xs text-center font-semibold`}
                 >
                   {showStatus(el)}
                 </span>
               </td>
-              <td className="text-right pr-2 max-md:text-xs">
+              <td className="text-right pr-2 text-xs">
                 {el?.endDate?.split("T")[0]}
               </td>
 

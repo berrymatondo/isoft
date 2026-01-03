@@ -60,6 +60,9 @@ export const GET = async (request: NextRequest) => {
 
         take: limit,
         skip: skip,
+        include: {
+          person: true,
+        },
       });
     } else {
       results = await prisma.immo.findMany({
@@ -98,6 +101,9 @@ export const GET = async (request: NextRequest) => {
         }, */
         take: limit,
         skip: skip,
+        include: {
+          person: true,
+        },
       });
     }
 

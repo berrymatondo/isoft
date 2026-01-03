@@ -37,17 +37,17 @@ const ClientsListPage = ({
   const session = authClient?.useSession();
   const tempo: any = session?.data?.user;
   const val: any = tempo ? tempo?.role : "USER";
-  console.log(
+  /*   console.log(
     "val-----------------------------------------------------: ",
     val
-  );
+  ); */
 
   useEffect(() => {
     const fetchClients = async () => {
       const data = await getAllclients(page, limit, search);
       //const data = res.json();
 
-      console.log("DATA ici: ", data);
+      // console.log("DATA ici: ", data);
 
       setClients(data);
     };
