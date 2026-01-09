@@ -11,13 +11,15 @@ import Chart from "@/components/dashboard/Chart";
 import AssuDash from "@/components/assu/AssuDash";
 import ImmoDash from "@/components/immo/ImmoDash";
 import ActionDash from "@/components/action/ActionDash";
-import { getSession } from "@/lib/auth-server";
+import { getSession, getUSer } from "@/lib/auth-server";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const session = await getSession();
-  //if (!session) redirect("/auth/login");
+  const user = await getUSer();
+  //console.log("user:", user);
+
+  if (!user) redirect("/auth/signin");
 
   // redirect("/dashboard");
 

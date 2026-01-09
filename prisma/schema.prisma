@@ -181,9 +181,9 @@ model Solde {
 
 model Parameter {
   id Int @id @default(autoincrement())
-  name String?
+  name String? @unique
   visible Boolean? @default(false)
-  origin String?
+  origin String? 
 
    @@map("parameter")
 }

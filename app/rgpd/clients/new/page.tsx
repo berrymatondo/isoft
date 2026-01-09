@@ -33,6 +33,24 @@ const NewPublicClient = () => {
   const inputStyle =
     "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
 
+  useEffect(() => {
+    //console.log("ID", params.clientId);
+
+    const fetchParam = async () => {
+      const res = await fetch(`/api/parametres/`, {
+        cache: "no-store",
+      });
+
+      //console.log("CLIENT: ", res);
+      const data = await res.json();
+      //console.log("CLIENT: ", data.client);
+
+      setOrigin(data.param?.origin);
+    };
+
+    fetchParam();
+  }, []);
+
   const HandleConfirmer = async (e: any) => {
     e.preventDefault();
 
@@ -336,10 +354,10 @@ const NewPublicClient = () => {
                     <span className="text-red-400">*</span>
                   </p>
                   <input
-                    onChange={(e) => {
+                    /*                     onChange={(e) => {
                       setErrorMsg("");
                       setOrigin(e.target.value);
-                    }}
+                    }} */
                     className={inputStyle}
                     type="text"
                     value={origin}

@@ -13,6 +13,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  LucideChevronsLeftRightEllipsis,
+  LucideAntenna,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -74,8 +76,14 @@ const menuItems = [
       },
       {
         name: "Nouveau client",
-        href: "/clients/new",
+        href: "rgpd/clients/new",
         icon: UserPlus2,
+        color: "text-secondary",
+      },
+      {
+        name: "Paramètres",
+        href: "/parametres",
+        icon: LucideAntenna,
         color: "text-secondary",
       },
     ],
@@ -87,7 +95,7 @@ export function Sidebar() {
   const session = useSession();
   const user = session.data?.user;
 
-  // if (user) console.log("USER", user);
+  if (user) console.log("USER", user);
 
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -146,7 +154,6 @@ export function Sidebar() {
           <ChevronLeft className="h-4 w-4" />
         )}
       </Button>
-
       {/* User Profile */}
       <div className="border-b border-sidebar-border px-4 py-3">
         <div className="flex items-center gap-3 ">
@@ -168,46 +175,49 @@ export function Sidebar() {
           )}
         </div>
       </div>
-
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto p-4">
-        {menuItems.map((section) => (
-          <div key={section.title} className="mb-6">
-            {!isCollapsed && (
-              <h3 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                {section.title}
-              </h3>
-            )}
-            <div className="space-y-1">
-              {section.items.map((item) => {
-                const isActive = pathname === item.href;
-                const Icon = item.icon;
+      {user && (
+        <nav className="flex-1 overflow-y-auto p-4">
+          {menuItems.map((section) => (
+            <div key={section.title} className="mb-6">
+              {!isCollapsed && (
+                <h3 className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  {section.title}
+                </h3>
+              )}
+              <div className="space-y-1">
+                {section.items.map((item) => {
+                  const isActive = pathname === item.href;
+                  const Icon = item.icon;
 
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={cn(
-                      "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
-                      isActive
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                        : "text-sidebar-foreground hover:bg-sidebar-accent/50",
-                      isCollapsed && "justify-center"
-                    )}
-                    title={isCollapsed ? item.name : undefined}
-                  >
-                    <Icon
-                      className={cn("h-5 w-5 shrink-0", isActive && item.color)}
-                    />
-                    {!isCollapsed && item.name}
-                  </Link>
-                );
-              })}
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className={cn(
+                        "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
+                        isActive
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                          : "text-sidebar-foreground hover:bg-sidebar-accent/50",
+                        isCollapsed && "justify-center"
+                      )}
+                      title={isCollapsed ? item.name : undefined}
+                    >
+                      <Icon
+                        className={cn(
+                          "h-5 w-5 shrink-0",
+                          isActive && item.color
+                        )}
+                      />
+                      {!isCollapsed && item.name}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
-      </nav>
-
+          ))}
+        </nav>
+      )}
       {/* Logout */}
       <div className="border-t border-sidebar-border p-4">
         {user ? (
