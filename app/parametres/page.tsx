@@ -60,7 +60,7 @@ const ParamPage = () => {
       },
       body: JSON.stringify(updateOrigin),
     };
-    console.log("updateOrigin", updateOrigin);
+   // console.log("updateOrigin", updateOrigin);
 
     try {
       //const res = await fetch(process.env.NEXT_PUBLIC_POLES_API!, options);

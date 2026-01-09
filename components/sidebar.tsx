@@ -76,7 +76,7 @@ const menuItems = [
       },
       {
         name: "Nouveau client",
-        href: "rgpd/clients/new",
+        href: "/rgpd/clients/new",
         icon: UserPlus2,
         color: "text-secondary",
       },
