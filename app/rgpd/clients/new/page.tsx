@@ -2,6 +2,7 @@
 
 import MyLabel from "@/components/MyLabel";
 import Title from "@/components/Title";
+import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { Gender, MaritalStatus } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -473,14 +474,14 @@ const NewPublicClient = () => {
             </div>
           </div>
 
-          <div className="flex justify-center gap-4 mt-4 rounded-lg px-2 py-1  ">
-            <button className="mt-4 border text-red-400 text-lg rounded-lg px-2 py-1 w-1/3">
+          <div className="flex max-lg:flex-col justify-center gap-4 mt-4 rounded-lg px-2 py-1  ">
+            <Button className="mt-4 border text-red-400 text-lg rounded-lg px-2 py-1 w-1/3 max-lg:w-full">
               Annuler
-            </button>
+            </Button>
             {accord && certifie && (
-              <button className="mt-4 bg-teal-800 hover:bg-teal-600 text-white text-lg rounded-lg px-2 py-1 w-1/3 ">
+              <Button className="mt-4 bg-teal-800 hover:bg-teal-600 text-white text-lg rounded-lg px-2 py-1 w-1/3  max-lg:w-full">
                 Confirmer et Enregister
-              </button>
+              </Button>
             )}
           </div>
         </div>
