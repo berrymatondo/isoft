@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    console.log("READ  param:", param?.origin);
+    //  console.log("READ  param:", param?.origin);
 
     return NextResponse.json({ message: "OK", param }, { status: 200 });
   } catch (error) {
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   const { origin } = await request.json();
 
-  console.log("startDate: ", origin);
+  //console.log("startDate: ", origin);
 
   const session = await getSession();
 
@@ -50,36 +50,9 @@ export async function PUT(request: NextRequest) {
       },
     });
 
-    console.log("param", param);
+    //  console.log("param", param);
 
     return NextResponse.json({ message: "OK", param }, { status: 200 });
-    //  return NextResponse.json({ message: "OK", results }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { message: "Error", error },
-      {
-        status: 500,
-      }
-    );
-  }
-}
-
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ immoId: any }> }
-) {
-  const { immoId } = await params;
-
-  try {
-    const results = await prisma.assurance.delete({
-      where: {
-        id: +immoId,
-      },
-    });
-
-    //  console.log("{ type, status, comments }", { type, status, comments });
-
-    return NextResponse.json({ message: "OK", results }, { status: 200 });
     //  return NextResponse.json({ message: "OK", results }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
