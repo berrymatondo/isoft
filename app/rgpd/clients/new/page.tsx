@@ -274,7 +274,7 @@ const NewPublicClient = () => {
               </div>
               {/*               </div>
                */}{" "}
-              <div className="flex max-lgflex-col justify-between place-items-center w-full gap-4">
+              <div className="flex max-lg flex-col justify-between place-items-center w-full gap-4">
                 <div className="w-full  lg:py-1 flex flex-col">
                   <MyLabel title="Date de naissance" />
                   <input

@@ -95,7 +95,7 @@ export function Sidebar() {
   const session = useSession();
   const user = session.data?.user;
 
-  if (user) console.log("USER", user);
+  // if (user) console.log("USER", user);
 
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -138,7 +138,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "relative flex flex-col border-r border-border bg-sidebar transition-all duration-300",
+        "relative flex flex-col border-r border-border bg-sidebar transition-all duration-300 max-sm:hidden",
         isCollapsed ? "w-16" : "w-64"
       )}
     >

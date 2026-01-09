@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { use, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import QRCode from "qrcode";
 
 const inputStyle =
   "rounded-lg py-1 px-2 max-lg:p-1 mb-1  bg-secondary outline-0 border border-hov";
@@ -21,6 +22,7 @@ const ParamPage = () => {
   const [parama, setParam] = useState<any>(null);
   const [paramaCurrent, setParamaCurrent] = useState<any>(null);
   const [name, setName] = useState<any>(null);
+  const [src, setSrc] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
@@ -79,6 +81,12 @@ const ParamPage = () => {
     // setData(data);
   };
 
+  const generate = async () => {
+    QRCode.toDataURL("https://isoft-nine.vercel.app/rgpd/clients/new").then(
+      setSrc
+    );
+  };
+
   return (
     <div className="w-full mx-auto ">
       <form onSubmit={processForm}>
@@ -100,6 +108,16 @@ const ParamPage = () => {
           Sauvegarder
         </Button>
       </form>
+      <div className="mt-16">
+        <Button className="bg-green-600 text-white" onClick={generate}>
+          Generate QRCode
+        </Button>
+      </div>
+      {src && (
+        <div className="mt-8">
+          <img src={src} alt="QR Code" />
+        </div>
+      )}
     </div>
   );
 };
