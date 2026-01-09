@@ -21,6 +21,7 @@ export default function ClientsListClient({
 }) {
   const [clients, setClients] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
+  const [exporting, setExporting] = useState(false);
 
   const session = authClient?.useSession();
   const tempo: any = session?.data?.user;
@@ -41,6 +42,41 @@ export default function ClientsListClient({
     computeTotal();
   }, [page, limit, search]);
 
+  const handleExportExcel = async () => {
+    try {
+      setExporting(true);
+
+      const res = await fetch("/api/clients/export", {
+        method: "GET",
+      });
+
+      if (!res.ok) {
+        throw new Error("Export failed");
+      }
+
+      const blob = await res.blob();
+
+      // Essayer de récupérer le filename depuis Content-Disposition (si présent)
+      const contentDisposition = res.headers.get("content-disposition") || "";
+      const match = contentDisposition.match(/filename="(.+)"/);
+      const filename = match?.[1] || "clients.xlsx";
+
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de l'export Excel.");
+    } finally {
+      setExporting(false);
+    }
+  };
+
   return (
     // ton JSX inchangé
     <div className=" mx-auto w-full max-md:px-2">
@@ -49,6 +85,21 @@ export default function ClientsListClient({
           <div className="flex items-center gap-2">
             <Title title="Liste des clients" back={false} size="lg:text-xl" />{" "}
             <span className="font-bold">({total})</span>
+          </div>
+          <div className="flex items-center gap-2 pr-2">
+            {/* Bouton Export Excel */}
+            <button
+              onClick={handleExportExcel}
+              disabled={exporting}
+              className="border rounded-lg px-3 py-2 text-sm bg-hov hover:opacity-90 disabled:opacity-60"
+            >
+              {exporting ? "Export en cours..." : "Exporter Excel"}
+            </button>
+
+            {/* Exemple: bouton add si tu veux le remettre */}
+            {/* {(val === "ADMIN" || val === "USER") && (
+              <AddButton path="/clients/newclient" text="Nouveau Client" />
+            )} */}
           </div>
           {/*           {(val === "ADMIN" || val === "USER") && (
            */}{" "}

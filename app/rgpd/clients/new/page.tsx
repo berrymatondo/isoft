@@ -86,8 +86,12 @@ const NewPublicClient = () => {
 
       //   return data;
 
-      if (res.ok) generateCode(+data.user.id);
-      //router.push("/rgpd/clients/new/ok");
+      if (res.ok) {
+        generateCode(+data.user.id);
+        //   console.log("ici");
+
+        //        router.push("/rgpd/clients/new/success");
+      }
     } catch (e) {
       return e;
     }
@@ -124,7 +128,7 @@ const NewPublicClient = () => {
     try {
       const res = await fetch(`/api/rgpd`, options);
       if (res.ok) {
-        router.push("/rgpd/clients/new/ok");
+        router.push("/rgpd/clients/new/success");
       }
     } catch (e) {
       return e;

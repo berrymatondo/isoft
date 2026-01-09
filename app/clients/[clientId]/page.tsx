@@ -303,7 +303,7 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
             {!rgdp && (
               <button
                 onClick={generateCode}
-                className="text-black my-2 p-2 bg-third rounded-lg"
+                className="text-white my-2 p-2 bg-green-600 rounded-lg hover:cursor-pointer hover:font-bold"
               >
                 Générer code RGPD
               </button>

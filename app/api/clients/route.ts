@@ -32,7 +32,7 @@ export const POST = async (request: NextRequest) => {
 
     // Hash password
 
-    const userTmp: any = getUSer();
+    const userTmp: any = await getUSer();
 
     /*     console.log("beforrrrrrreeeee", {
       firstName,
@@ -59,8 +59,8 @@ export const POST = async (request: NextRequest) => {
         origin: origin,
         // createAt: new Date(),
         // updatedAt: new Date(),
-        username: userTmp.username ? userTmp.username : "",
-        userId: userTmp.id ? parseInt(userTmp.id) : null,
+        username: userTmp ? userTmp?.username : "TECH",
+        userId: userTmp ? parseInt(userTmp?.id) : 0,
       },
     });
 
