@@ -53,6 +53,8 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
       const foundTask = data.client.task.find(
         (task: Task) => task.assuId === +assuId
       );
+      // console.log("foundTask", foundTask);
+
       setTask(foundTask);
     };
 
@@ -229,13 +231,15 @@ const ClientAssuPage = ({ params }: ClientAssuPageProps) => {
               />
             </div>
             <div className="flex justify-center gap-4 mt-4 rounded-lg px-2 py-1  ">
-              {val === "ADMIN" && !task && (
+              {/*               {val === "ADMIN" && !task && (
+               */}{" "}
+              {!task && (
                 <button
                   type="button"
                   onClick={() =>
                     router.push(`/clients/${clientId}/assus/${assuId}/delete`)
                   }
-                  className="hover:bg-third mt-4 border text-red-400 text-lg rounded-lg px-2 py-1 w-1/3"
+                  className="hover:bg-third mt-4 border text-red-400 text-lg rounded-lg px-2 py-1 w-1/3 hover:text-red-200"
                 >
                   Supprimer
                 </button>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { getSession } from "@/lib/auth-server";
+import { getSession, getUSer } from "@/lib/auth-server";
 
 export async function GET(
   request: NextRequest,
@@ -48,6 +48,7 @@ export async function PUT(
 ) {
   const { immoId } = await params;
 
+  const user = await getUSer();
   const {
     maritalStatus,
     salNet,
@@ -118,8 +119,8 @@ export async function PUT(
         demandeCours,
         fileClosed,
         notes,
-        username: userTmp.username ? userTmp.username : "",
-        userId: userTmp.id ? parseInt(userTmp.id) : null,
+        username: user?.name ? user?.name : "",
+        userId: user?.id ? parseInt(user?.id) : null,
       },
     });
 

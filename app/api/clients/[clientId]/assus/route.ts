@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
-import { getSession } from "@/lib/auth-server";
+import { getSession, getUSer } from "@/lib/auth-server";
 
 export const POST = async (request: NextRequest) => {
   const { assudenom, assustatus, description } = await request.json();
@@ -15,6 +15,7 @@ export const POST = async (request: NextRequest) => {
   // console.log("obj", { assudenom, assustatus, description });
 
   const session = await getSession();
+  const user = await getUSer();
 
   try {
     const userTmp: any = session?.user;
@@ -24,8 +25,8 @@ export const POST = async (request: NextRequest) => {
         status: assustatus,
         comments: description,
         personId: +clientId,
-        username: userTmp.username ? userTmp.username : "",
-        userId: userTmp.id ? parseInt(userTmp.id) : null,
+        username: user?.name ? user?.name : "",
+        userId: user?.id ? parseInt(user?.id) : null,
       },
     });
 

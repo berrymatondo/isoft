@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
-import { getSession } from "@/lib/auth-server";
+import { getSession, getUSer } from "@/lib/auth-server";
 
 export const PUT = async (request: NextRequest) => {
   //const url = new URL(request.url);
@@ -45,6 +45,7 @@ export const PUT = async (request: NextRequest) => {
   //console.log("startDate: ", startDate, "endDate: ", endDate);
 
   const session = await getSession();
+  const user = await getUSer();
 
   try {
     /*       const results = await prisma.assurance.findMany({
@@ -85,8 +86,8 @@ export const PUT = async (request: NextRequest) => {
         demandeCours,
         fileClosed,
         notes,
-        username: userTmp.username ? userTmp.username : "",
-        userId: userTmp.id ? parseInt(userTmp.id) : null,
+        username: user?.name ? user?.name : "",
+        userId: user?.id ? parseInt(user?.id) : null,
       },
     });
 

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
-import { getSession } from "@/lib/auth-server";
+import { getSession, getUSer } from "@/lib/auth-server";
 
 export const POST = async (request: NextRequest) => {
   const {
@@ -44,6 +44,9 @@ export const POST = async (request: NextRequest) => {
   }); */
 
   const session = await getSession();
+  const user = await getUSer();
+
+  console.log("user", user);
 
   try {
     const userTmp: any = session?.user;
@@ -64,8 +67,8 @@ export const POST = async (request: NextRequest) => {
         notes,
         demAmount: 0,
         taux: 0,
-        username: userTmp.username ? userTmp.username : "",
-        userId: userTmp.id ? parseInt(userTmp.id) : null,
+        username: user?.name ? user?.name : "",
+        userId: user?.id ? parseInt(user?.id) : null,
       },
     });
 
