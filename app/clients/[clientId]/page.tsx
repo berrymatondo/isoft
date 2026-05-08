@@ -272,8 +272,12 @@ const DetailsClientPage = ({ params }: ClientDetailsPageProps) => {
             {/*             {val === "ADMIN" && (
              */}{" "}
             <div className="w-full flex justify-end gap-4">
-              {/*               <button className="text-red-400">Supprimer</button>
-               */}{" "}
+              <button
+                onClick={() => router.push(`/clients/${client?.id}/delete`)}
+                className="bg-gray-200 text-red-600 p-2 rounded-lg hover:cursor-pointer hover:font-bold"
+              >
+                Supprimer
+              </button>
               <button
                 onClick={() => router.push(`/clients/${client?.id}/update`)}
                 className="bg-orange-400 p-2 rounded-lg hover:cursor-pointer hover:font-bold"

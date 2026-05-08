@@ -21,6 +21,7 @@ export default async function Page({
 
   if (!user) {
     redirect("/auth/signin");
+    // Redirection
   }
 
   return <ActionsListAction page={page} limit={limit} search={search} />;

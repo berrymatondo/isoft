@@ -12,6 +12,7 @@ export default async function Page({
   searchParams: Promise<SearchParams>;
 }) {
   const user = await getUSer();
+  //console.log("userx", user);
 
   if (!user) {
     redirect("/auth/signin");

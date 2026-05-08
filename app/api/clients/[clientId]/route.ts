@@ -16,7 +16,7 @@ export const GET = async (request: NextRequest) => {
   console.log("path vaut:", path);
   console.log("clientId vaut:", clientId); */
 
-  console.log("clientId vaut:", clientId);
+  //console.log("clientId vaut:", clientId);
 
   try {
     const client = await prisma.person.findUnique({
@@ -87,6 +87,37 @@ export const PUT = async (request: NextRequest) => {
     //console.log("READ client:", client);
 
     return NextResponse.json({ message: "OK", client }, { status: 200 });
+  } catch (error) {
+    console.log("error", error);
+
+    return NextResponse.json(
+      { message: "Error", error },
+      {
+        status: 500,
+      }
+    );
+  }
+};
+
+export const DELETE = async (request: NextRequest) => {
+  const path = request.nextUrl.pathname;
+  const clientId = path.split("clients/")[1];
+  console.log("READ client ici:", clientId);
+
+  const session = await getSession();
+
+  try {
+    const userTmp: any = session?.user;
+    const client = await prisma.person.delete({
+      where: {
+        id: +clientId,
+      },
+    });
+
+    // console.log("READ client:", clientId);
+    // npx prisma migrate dev -n cascade-person-tasks
+
+    return NextResponse.json({ message: "OK", userTmp }, { status: 200 });
   } catch (error) {
     console.log("error", error);
 
